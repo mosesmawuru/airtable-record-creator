@@ -4,14 +4,15 @@ const { Toolkit } = require('actions-toolkit')
 // Run your GitHub Action!
 Toolkit.run(async tools => {
   const action = tools.context.payload.action
+  const issue = tools.context.payload.issue
+  tools.log.success(issue)
 
 
-  if (action !== "opened") {
-    tools.exit.neutral("Just checking for recent issues")
-  }
+  // if (action !== "opened") {
+  //   tools.exit.neutral("Just checking for recent issues")
+  // }
 
   try {
-    const issue = tools.context.payload.issue
     // const results = await pinIssue(tools, issue.node_id, labeled)
 
     tools.log.success(`Issue #${issue.title} opened`)
