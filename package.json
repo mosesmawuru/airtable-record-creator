@@ -7,7 +7,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "actions-toolkit": "^2.1.0"
+    "actions-toolkit": "^2.1.0",
+    "airtable": "^0.7.1",
+    "prettier": "^1.18.2"
   },
   "devDependencies": {
     "jest": "^24.5.0"
