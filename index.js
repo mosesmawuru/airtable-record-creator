@@ -16,10 +16,9 @@ async function createEventObject(body) {
   return arr3.map(a => (obj[`${a[0]}`] = a[1]));
 }
 
-async function createAirTableRecord(obj, url) {
+async function createAirTableRecord(body, url) {
   const Airtable = require("airtable");
   const base = new Airtable({apiKey: token}).base(baseId);
-  const body = await createEventObject(obj);
   let id = "sample";
 
   base("All IRL Events").create(
@@ -45,16 +44,17 @@ async function createAirTableRecord(obj, url) {
 Toolkit.run(async tools => {
   const action = tools.context.payload.action;
   const issue = tools.context.payload.issue;
+  const body = await createEventObject(issue.body);
 
   tools.log.success(action);
-  tools.log.success(issue);
+  tools.log.success(body);
 
   if (action !== "opened") {
     tools.exit.neutral("Just checking for recent issues");
   }
 
   try {
-    createAirTableRecord(issue.body, issue.url);
+    createAirTableRecord(body, issue.url);
 
     // tools.log.success(`Airtable record #${recordId} created`);
     tools.exit.success("Action is complete");
