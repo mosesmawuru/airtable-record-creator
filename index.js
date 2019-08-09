@@ -17,7 +17,7 @@ async function createEventObject(body) {
 }
 
 function createAirTableRecord(body, url) {
-  const base = new Airtable({apiKey: token}).base(baseId);
+  const base = new Airtable({apiKey: token}).base("app9Mu6FlRuFmRWC1");
 
   return base("All IRL Events").create(
     {
