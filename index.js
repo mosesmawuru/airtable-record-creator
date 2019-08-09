@@ -4,6 +4,7 @@ const token = process.env.AIRTABLE_KEY;
 const baseId = process.env.AIRTABLE_BASE;
 
 async function createEventObject(body) {
+  // TODO: Don't do this here.
   let obj = {};
   let arr1 = body.split("```")[1];
   let arr2 = arr1.split("\r\n");
@@ -11,6 +12,7 @@ async function createEventObject(body) {
   arr2.pop();
 
   let arr3 = arr2.map(a => a.split(":"));
+  // TODO: Dynamically create object from variables in issue
   arr3.map(a => (obj[`${a[0].replace(" ", "_").toLowerCase()}`] = a[1].trim()));
 
   return obj;
@@ -19,14 +21,15 @@ async function createEventObject(body) {
 function createAirTableRecord(body, url) {
   const base = new Airtable({apiKey: token}).base(baseId);
 
+  //TODO: Don't hard code info here
   return base("All IRL Events").create(
     {
       Event: body.event_name,
       Location: body.location,
-      Starts: "10/10/2019",
+      Starts: body.start_date,
+      Ends: body.end_date,
       "GitHub Issue": url,
-      Status: ["Approved"],
-      "Event Type": ["Meetup"],
+      Status: ["Under Consideration"],
       Triage: "Under Consideration",
       "IRL Roadmap": "Coming Soon",
     }
