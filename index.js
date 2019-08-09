@@ -20,12 +20,13 @@ async function createAirTableRecord(obj, url) {
   const Airtable = require("airtable");
   const base = new Airtable({apiKey: token}).base(baseId);
   const body = await createEventObject(obj);
-  let id;
+  let id = "sample";
 
   base("All IRL Events").create(
     {
       Event: body.event_name,
       Location: body.location,
+      Starts: "10/10/2019",
       "GitHub Issue": url,
       Status: ["Under Consideration"],
       Triage: "Under Consideration",
@@ -36,11 +37,9 @@ async function createAirTableRecord(obj, url) {
         console.error(err);
         return;
       }
-      id = record.getId();
+      console.log(record.getId());
     },
   );
-
-  return id;
 }
 
 // Run your GitHub Action!
@@ -56,9 +55,9 @@ Toolkit.run(async tools => {
   }
 
   try {
-    const recordId = await createAirTableRecord(issue.body, issue.url);
+    createAirTableRecord(issue.body, issue.url);
 
-    tools.log.success(`Airtable record #${recordId} created`);
+    // tools.log.success(`Airtable record #${recordId} created`);
     tools.exit.success("Action is complete");
   } catch (err) {
     // Log the error message
