@@ -3,17 +3,17 @@ This action will create a record when issue is opened
 
 ## example usage
 ```
-workflow "create-airtable-record" {
-  resolves = ["create airtable record"]
-  on = "issues"
-}
-
-action "ccreate airtable recordr" {
-  uses = "bdougie/airtable-record-creator@master"
-  secrets = [
-    "GITHUB_TOKEN",
-    "AIRTABLE_TOKEN",
-    "AIRTABLE_BASE",
-  ]
-}
+on: issues
+name: Create Airtable Records
+jobs:
+  airtable-record-creator:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: airtable-record-creator
+      uses: bdougie/airtable-record-creator@master
+      env:
+        AIRTABLE_KEY: ${{ secrets.AIRTABLE_KEY }}
+        AIRTABLE_BASE: ${{ secrets.AIRTABLE_BASE }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
