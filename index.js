@@ -1,6 +1,6 @@
 const {Toolkit} = require("actions-toolkit");
 const Airtable = require("airtable");
-const token = process.env.AIRTABLE_TOKEN;
+const token = process.env.AIRTABLE_KEY;
 const baseId = process.env.AIRTABLE_BASE;
 
 async function createEventObject(body) {
@@ -16,7 +16,7 @@ async function createEventObject(body) {
   return obj
 }
 
-function createAirTableRecord(body, url) {
+async function createAirTableRecord(body, url) {
   const base = new Airtable({apiKey: token}).base(baseId);
 
   return base("All IRL Events").create(
@@ -61,7 +61,7 @@ Toolkit.run(async tools => {
     tools.exit.success("Action is complete");
   } catch (err) {
     // Log the error message
-    tools.log.error(`An error occurred while pinning the issue.`);
+    tools.log.error(`An error occurred while creatiring record.`);
     tools.log.error(err);
 
     // The error might have more details
