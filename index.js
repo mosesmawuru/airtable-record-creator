@@ -13,19 +13,20 @@ async function createEventObject(body) {
   let arr3 = arr2.map(a => a.split(":"));
   arr3.map(a => (obj[`${a[0].replace(" ", "_").toLowerCase()}`] = a[1].trim()));
 
-  return obj
+  return obj;
 }
 
-async function createAirTableRecord(body, url) {
+function createAirTableRecord(body, url) {
   const base = new Airtable({apiKey: token}).base(baseId);
 
   return base("All IRL Events").create(
     {
-      "Event": body.event_name,
-      "Location": body.location,
+      Event: body.event_name,
+      Location: body.location,
       Starts: "10/10/2019",
       "GitHub Issue": url,
-      "Status": ["Under Consideration"],
+      Status: ["Approved"],
+      "Event Type": ["Meetup"],
       Triage: "Under Consideration",
       "IRL Roadmap": "Coming Soon",
     },
@@ -45,7 +46,6 @@ Toolkit.run(async tools => {
   const body = await createEventObject(issue.body);
 
   tools.log.success(action);
-  tools.log.success(`Working with ${process.env.AIRTABLE_BASE} airtable`);
 
   if (action !== "opened") {
     tools.exit.neutral("Just checking for recent issues");
@@ -54,7 +54,7 @@ Toolkit.run(async tools => {
   try {
     tools.log.success(body);
     tools.log.success(issue.url);
-    tools.log.success(`Working with ${process.env.AIRTABLE_BASE} airtable`);
+
     createAirTableRecord(body, issue.url);
 
     // tools.log.success(`Airtable record #${recordId} created`);
