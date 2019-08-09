@@ -29,13 +29,7 @@ function createAirTableRecord(body, url) {
       "Event Type": ["Meetup"],
       Triage: "Under Consideration",
       "IRL Roadmap": "Coming Soon",
-    },
-    function(err, record) {
-      if (err) {
-        return err;
-      }
-      return record;
-    },
+    }
   );
 }
 
@@ -55,9 +49,10 @@ Toolkit.run(async tools => {
     tools.log.success(body);
     tools.log.success(issue.url);
 
-    createAirTableRecord(body, issue.url);
+    const record = await createAirTableRecord(body, issue.url);
 
     // tools.log.success(`Airtable record #${recordId} created`);
+    tools.log.success(record);
     tools.exit.success("Action is complete");
   } catch (err) {
     // Log the error message
