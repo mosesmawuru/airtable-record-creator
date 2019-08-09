@@ -34,10 +34,9 @@ async function createAirTableRecord(obj, url) {
     },
     function(err, record) {
       if (err) {
-        console.error(err);
-        return;
+        return err;
       }
-      console.log(record.getId());
+      return record.getId();
     },
   );
 }
