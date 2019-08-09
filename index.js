@@ -13,7 +13,7 @@ async function createEventObject(body) {
   let arr3 = arr2.map(a => a.split(":"));
   arr3.map(a => (obj[`${a[0].replace(" ", "_").toLowerCase()}`] = a[1].trim()));
 
-  return arr3.map(a => (obj[`${a[0]}`] = a[1]));
+  return obj
 }
 
 async function createAirTableRecord(body, url) {
