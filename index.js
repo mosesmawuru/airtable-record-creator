@@ -59,7 +59,7 @@ Toolkit.run(async tools => {
     tools.exit.success("Action is complete");
   } catch (err) {
     // Log the error message
-    tools.log.error(`An error occurred while creatiring record.`);
+    tools.log.error(`An error occurred while creating record.`);
     tools.log.error(err);
 
     // The error might have more details
