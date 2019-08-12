@@ -1,7 +1,5 @@
 const {Toolkit} = require("actions-toolkit");
 const Airtable = require("airtable");
-const token = process.env.AIRTABLE_KEY;
-const baseId = process.env.AIRTABLE_BASE;
 
 async function createEventObject(body) {
   // TODO: Don't do this here.
@@ -19,7 +17,7 @@ async function createEventObject(body) {
 }
 
 function createAirTableRecord(body, url) {
-  const base = new Airtable({apiKey: token}).base(baseId);
+  const base = new Airtable({apiKey: process.env.AIRTABLE_KEY}).base(process.env.AIRTABLE_BASE);
 
   //TODO: Don't hard code info here
   return base("All IRL Events").create(
